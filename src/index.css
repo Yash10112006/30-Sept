@@ -1,0 +1,326 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap');
+
+@import "tailwindcss";
+
+/* ─── Design Tokens ─────────────────────────────────────────── */
+:root {
+  --bg-primary:    #0c0c0c;
+  --bg-secondary:  #141414;
+  --bg-card:       #1a1917;
+  --cream:         #f5f0e8;
+  --cream-muted:   #d9d2c5;
+  --gold:          #b8965a;
+  --gold-muted:    #8a6e3f;
+  --warm-white:    #faf8f4;
+  --text-primary:  #f0ebe0;
+  --text-secondary:#a09888;
+  --text-dim:      #5a5347;
+  --border:        rgba(184, 150, 90, 0.12);
+  --border-strong: rgba(184, 150, 90, 0.25);
+
+  --font-serif:    'Cormorant Garamond', Georgia, serif;
+  --font-sans:     'Inter', system-ui, sans-serif;
+}
+
+/* ─── Base Reset ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-weight: 300;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ─── Typography Utilities ───────────────────────────────────── */
+.font-serif    { font-family: var(--font-serif); }
+.font-sans     { font-family: var(--font-sans); }
+.text-cream    { color: var(--cream); }
+.text-cream-m  { color: var(--cream-muted); }
+.text-gold     { color: var(--gold); }
+.text-dim      { color: var(--text-dim); }
+.text-secondary{ color: var(--text-secondary); }
+
+/* ─── Scrollbar Styling ──────────────────────────────────────── */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb { background: var(--gold-muted); border-radius: 2px; }
+
+/* ─── Selection ──────────────────────────────────────────────── */
+::selection { background: rgba(184,150,90,0.2); color: var(--cream); }
+
+/* ─── Focus Visible ──────────────────────────────────────────── */
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 2px; }
+
+/* ─── Noise Texture Overlay ──────────────────────────────────── */
+.noise-overlay {
+  position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  opacity: 0.3;
+  mix-blend-mode: overlay;
+}
+
+/* ─── Section Base ───────────────────────────────────────────── */
+.section-base {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5rem 1.25rem;
+  overflow: hidden;
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .section-base { padding: 6rem 2rem; }
+}
+@media (min-width: 768px) {
+  .section-base { padding: 8rem 2.5rem; }
+}
+@media (min-width: 1024px) {
+  .section-base { padding: 10rem 3rem; }
+}
+
+/* ─── Gold Line Divider ──────────────────────────────────────── */
+.gold-line {
+  width: 1px; height: 60px;
+  background: linear-gradient(to bottom, transparent, var(--gold-muted), transparent);
+  margin: 0 auto;
+}
+
+.gold-line-h {
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold-muted), transparent);
+}
+
+/* ─── WhatsApp Chat Bubbles ──────────────────────────────────── */
+.chat-bubble-out {
+  background: #1a3a2e;
+  border-radius: 12px 12px 2px 12px;
+  color: #e8f5e0;
+  padding: 0.6rem 0.9rem;
+  max-width: 80%;
+  align-self: flex-end;
+  position: relative;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+.chat-bubble-in {
+  background: #252220;
+  border-radius: 12px 12px 12px 2px;
+  color: #e8e4dc;
+  padding: 0.6rem 0.9rem;
+  max-width: 80%;
+  align-self: flex-start;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+.chat-timestamp {
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.35);
+  margin-top: 3px;
+  text-align: right;
+}
+.chat-redacted {
+  background: rgba(255,255,255,0.08);
+  color: transparent;
+  border-radius: 3px;
+  user-select: none;
+  letter-spacing: 0.05em;
+}
+
+/* ─── Polaroid Card ──────────────────────────────────────────── */
+.polaroid {
+  background: #1e1c1a;
+  padding: 0.75rem 0.75rem 2.5rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6), 0 2px 8px rgba(0,0,0,0.4);
+  position: relative;
+}
+.polaroid img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+}
+.polaroid-caption {
+  position: absolute;
+  bottom: 0.6rem; left: 0; right: 0;
+  text-align: center;
+  font-family: var(--font-serif);
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  padding: 0 0.5rem;
+  font-style: italic;
+}
+
+/* ─── Glass Card ─────────────────────────────────────────────── */
+.glass-card {
+  background: rgba(20,19,17,0.75);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(184, 150, 90, 0.1);
+  border-radius: 14px;
+}
+
+/* ─── Scene Label ────────────────────────────────────────────── */
+.scene-label {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  letter-spacing: 0.45em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+/* ─── Cinematic Text Reveal ──────────────────────────────────── */
+.reveal-clip { overflow: hidden; }
+.reveal-clip > * { display: block; }
+
+/* ─── Scroll Progress Bar ────────────────────────────────────── */
+.scroll-progress {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(to right, var(--gold-muted), var(--gold));
+  transform-origin: left;
+  z-index: 1000;
+}
+
+/* ─── Vertical Navigation Dots ──────────────────────────────── */
+.nav-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--text-dim);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.nav-dot.active {
+  background: var(--gold);
+  height: 20px;
+  border-radius: 3px;
+}
+
+/* ─── Music Player ───────────────────────────────────────────── */
+.music-progress-bar {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%; height: 2px;
+  background: var(--text-dim);
+  outline: none; cursor: pointer;
+  border-radius: 2px;
+}
+.music-progress-bar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--gold);
+  cursor: pointer;
+}
+
+/* ─── Video Player ───────────────────────────────────────────── */
+.video-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* ─── Prefers Reduced Motion ─────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ─── Custom Animations ──────────────────────────────────────── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+@keyframes pulse-gold {
+  0%, 100% { opacity: 0.4; }
+  50%       { opacity: 0.8; }
+}
+@keyframes scanline {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+.animate-float    { animation: float 6s ease-in-out infinite; }
+.animate-pulse-gold { animation: pulse-gold 3s ease-in-out infinite; }
+
+/* ─── Counter Number ─────────────────────────────────────────── */
+.counter-display {
+  font-family: var(--font-serif);
+  font-size: clamp(4rem, 15vw, 12rem);
+  font-weight: 300;
+  color: var(--cream);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+/* ─── Lightbox ───────────────────────────────────────────────── */
+.lightbox-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.95);
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+.lightbox-img {
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+/* ─── Mobile-safe vh ─────────────────────────────────────────── */
+.h-screen-safe {
+  height: 100vh;
+  height: 100dvh;
+}
+
+/* ─── WhatsApp notification style ───────────────────────────── */
+.wa-notification {
+  background: #1a2a1f;
+  border: 1px solid rgba(37, 211, 102, 0.2);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  max-width: 320px;
+}
+.wa-avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2a5c3f, #1a3a28);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.9rem; font-weight: 600; color: #86efac;
+  flex-shrink: 0;
+}
+
+/* ─── Reduced Motion ─────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
